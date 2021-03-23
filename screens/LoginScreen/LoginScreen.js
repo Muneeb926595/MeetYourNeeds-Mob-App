@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-community/async-storage";
 import styled from "styled-components/native";
 
 import { Col, Text } from "../../@uiComponents";
@@ -25,7 +26,7 @@ const MyButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: #007aff;
-  margin-bottom: 0.6rem;
+  margin-bottom: 10px;
   padding: 10px 0px;
 `;
 
@@ -33,6 +34,16 @@ export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const _retrieveData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        return value;
+      }
+    } catch (error) {}
+  };
+
   const handleLoginSubmit = () => {
     if (username === "" || password === "") {
       alert("Please Enter All Fields Correctly");
@@ -48,6 +59,15 @@ export default function LoginScreen({ navigation }) {
       );
     }
   };
+
+  useEffect(() => {
+    const userId = _retrieveData("userId");
+    const access_token = _retrieveData("access_token");
+
+    if (userId && access_token) {
+      navigation.navigate("Navigation");
+    }
+  }, [navigation]);
 
   return (
     <Col centerAll>

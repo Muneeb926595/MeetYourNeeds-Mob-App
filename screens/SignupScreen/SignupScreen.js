@@ -25,7 +25,7 @@ const MyButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: #007aff;
-  margin-bottom: 0.6rem;
+  margin-bottom: 10px;
   padding: 10px 0px;
 `;
 
