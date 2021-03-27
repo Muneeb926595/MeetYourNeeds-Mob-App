@@ -1,9 +1,15 @@
-import { User } from '../../@models/User'
+import { User } from "../../@models/User";
+import { Product } from "../../@models/Product";
 
-export {}
+export {};
 declare global {
   interface AuthState {
-    user: User
-    loading?: boolean
+    user: User;
+    cart: any[];
+    loading?: boolean;
+  }
+  interface ProductState {
+    products: Product[];
+    loading?: boolean;
   }
 }
