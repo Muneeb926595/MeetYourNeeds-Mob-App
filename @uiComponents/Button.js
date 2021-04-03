@@ -9,17 +9,12 @@ const StyledButton = styled.TouchableOpacity`
 
 const MyButton = (props) => {
   const { onClick, disabled, color, black, text } = props;
-
   return (
     <StyledButton onPress={onClick} {...props}>
       {props.text && (
         <Text
           bold
-          color={disabled ? "gray" : color || (black ? "#000000" : "#ffffff")}
-          style={{
-            marginLeft: icon ? 14 : 0,
-            marginRight: props.rightIcon ? 5 : 0,
-          }}
+          color={color || (black ? "#000000" : "#ffffff")}
           size={props.textSize || "14px"}
         >
           {text}

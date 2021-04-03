@@ -17,6 +17,15 @@ const buttonStyles = (props) => {
       `
       background-color: gray;`
     };
+    ${
+      props.dangerOutlined &&
+      `
+      border: 1px solid red;
+      border-width: 1px;
+      border-color: red;
+      background:transparent;
+      `
+    };
 
     ${
       props.icon &&
