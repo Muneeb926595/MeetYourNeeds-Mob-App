@@ -1,6 +1,7 @@
 import { AuthActionTypes } from "./../redux/actionTypes";
 const INITIAL_STATE: AuthState = {
   user: {},
+  cart: [],
   loading: false,
 };
 interface Action {
@@ -41,6 +42,86 @@ const AuthReducer = (
       return {
         ...state,
         user: action.payload,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.ADD_TO_CART_START: {
+      return { ...state, loading: true };
+    }
+    case AuthActionTypes.ADD_TO_CART_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.ADD_TO_CART_FAIL: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.GET_CART_START: {
+      return { ...state, loading: true };
+    }
+    case AuthActionTypes.GET_CART_SUCCESS: {
+      return {
+        ...state,
+        cart: action.payload,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.GET_CART_FAIL: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.REMOVE_FROM_CART_START: {
+      return { ...state, loading: true };
+    }
+    case AuthActionTypes.REMOVE_FROM_CART_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.REMOVE_FROM_CART_FAIL: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.ADD_ORDER_START: {
+      return { ...state, loading: true };
+    }
+    case AuthActionTypes.ADD_ORDER_SUCCESS: {
+      return {
+        ...state,
+        cart: [],
+        loading: false,
+      };
+    }
+    case AuthActionTypes.ADD_TO_CART_FAIL: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+    case AuthActionTypes.ADD_TO_CART_LOCALLY: {
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
+        loading: false,
+      };
+    }
+    case AuthActionTypes.REMOVE_FROM_CART_LOCALLY: {
+      const tempCartProducts = state.cart.filter(
+        (singleProduct) =>
+          singleProduct.cart._id.toString() !== action.payload.toString()
+      );
+      return {
+        ...state,
+        cart: tempCartProducts,
         loading: false,
       };
     }

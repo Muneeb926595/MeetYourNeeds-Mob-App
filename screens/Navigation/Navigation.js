@@ -1,4 +1,7 @@
 import React, { useLayoutEffect } from "react";
+import { useSelector } from "react-redux";
+import { Text } from "react-native";
+import styled from "styled-components/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -8,7 +11,24 @@ import LogOutscreen from "../LogOutScreen/LogOutscreen";
 
 const Tab = createMaterialBottomTabNavigator();
 
+const CartCount = styled.View`
+  position: absolute;
+  right: -4px;
+  top: -2px;
+  background-color: #fd7e7e;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  width: 14px;
+  height: 14px;
+  font-size: 9px;
+  color: #ffffff;
+`;
 export default function Navigation({ navigation }) {
+  const cartData = useSelector(({ MeedYourNeeds }) => MeedYourNeeds.auth.cart);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: "Home",
@@ -34,7 +54,14 @@ export default function Navigation({ navigation }) {
         options={{
           tabBarLabel: "Cart",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="cart" color={color} size={24} />
+            <>
+              {cartData && cartData.length > 0 && (
+                <CartCount>
+                  <Text>{cartData.length}</Text>
+                </CartCount>
+              )}
+              <MaterialCommunityIcons name="cart" color={color} size={24} />
+            </>
           ),
         }}
       />

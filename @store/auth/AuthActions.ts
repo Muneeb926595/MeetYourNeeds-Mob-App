@@ -313,7 +313,7 @@ export const addOrder = ({ products, paymentMethod }, setShowCheckoutModal) => {
       .then((res) => {
         let { data } = res;
         if (data) {
-          addOrderSuccess(dispatch, data, setShowCheckoutModal);
+          addOrderSuccess(dispatch, data, setShowCheckoutModal, paymentMethod);
         } else {
           addOrderFail(dispatch, "There was an error connection");
         }
@@ -333,13 +333,20 @@ const addOrderFail = (dispatch, errorMessage) => {
     },
   });
 };
-const addOrderSuccess = (dispatch, data, setShowCheckoutModal) => {
+const addOrderSuccess = (
+  dispatch,
+  data,
+  setShowCheckoutModal,
+  paymentMethod
+) => {
   dispatch({
     type: AuthActionTypes.ADD_ORDER_SUCCESS,
     payload: data,
   });
-  dispatch(getProducts());
-  setShowCheckoutModal(false);
+  paymentMethod === "mobile"
+    ? alert("Order Placed Successfully")
+    : dispatch(getProducts());
+  paymentMethod !== "mobile" && setShowCheckoutModal(false);
 };
 
 export const addToCartLocally = (
