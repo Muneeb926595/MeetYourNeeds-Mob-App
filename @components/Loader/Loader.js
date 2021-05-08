@@ -13,16 +13,14 @@ function Loader() {
         height: 56,
       }}
     >
-      <Image
-        // source={{
-        //   uri: loading,
-        // }}
+      {/* <Image
+        source={loading}
         style={{
           alignSelf: "center",
           width: 100,
           height: 100,
         }}
-      />
+      /> */}
     </View>
   );
 }

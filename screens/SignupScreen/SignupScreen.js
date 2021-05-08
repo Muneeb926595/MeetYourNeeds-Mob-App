@@ -80,8 +80,8 @@ export default function SignupScreen({ navigation }) {
       </Text>
       <MyInput
         placeholder="Email"
-        value={email}
         marg="0 0 10px 0"
+        value={email}
         onChangeText={(text) => setEmail(text)}
       />
       <MyInput

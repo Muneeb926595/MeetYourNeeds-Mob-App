@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import CartCard from "../../@components/CartCard/CartCard";
 import { Button } from "../../@uiComponents";
 import { addOrder } from "../../@store/auth/AuthActions";
+import StorageHelper from "../../@helpers/StorageHelper";
 
 const Checkout = styled.View`
   display: flex;
@@ -21,9 +22,19 @@ const Checkout = styled.View`
 
 const CartScreen = () => {
   const dispatch = useDispatch();
+  const [userId, setUserId] = useState("");
   const cartData = useSelector(({ MeedYourNeeds }) => MeedYourNeeds.auth.cart);
+
+  useEffect(() => {
+    const getUserId = async () => {
+      const localUserId = await StorageHelper.getItem("userId");
+      setUserId(localUserId);
+    };
+
+    getUserId();
+  }, []);
   return (
-    <View style={{ marginTop: "20px" }}>
+    <View style={{ marginTop: 20 }}>
       <FlatList
         data={cartData}
         renderItem={({ item }) => <CartCard item={item} />}
@@ -42,6 +53,7 @@ const CartScreen = () => {
                   return cart._id;
                 }),
                 paymentMethod: "mobile",
+                userId: userId,
               })
             )
           }

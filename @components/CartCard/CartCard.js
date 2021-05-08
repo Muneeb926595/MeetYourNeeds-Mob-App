@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
 
@@ -6,6 +6,7 @@ import {
   removeFromCart,
   removeFromCartLocally,
 } from "../../@store/auth/AuthActions";
+import StorageHelper from "../../@helpers/StorageHelper";
 import { Clickable } from "../../@uiComponents";
 import deleteIcon from "../../assets/deleteIcon.png";
 
@@ -62,9 +63,17 @@ const DeleteIcon = styled.Image`
 
 const ProductItem = ({ item }) => {
   const dispatch = useDispatch();
+  const [userId, setUserId] = useState("");
+  useEffect(() => {
+    const getUserId = async () => {
+      const localUserId = await StorageHelper.getItem("userId");
+      setUserId(localUserId);
+    };
 
+    getUserId();
+  }, []);
   const handleRemoveProduct = () => {
-    dispatch(removeFromCart(item.cart._id));
+    dispatch(removeFromCart(userId, item.cart._id));
     dispatch(removeFromCartLocally(item.cart._id));
   };
 

@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import styled from "styled-components/native";
 
 import { Col, Text } from "../../@uiComponents";
+import StorageHelper from "../../@helpers/StorageHelper";
 import loginScreen from "../../assets/loginScreen.png";
 import { submitLogin } from "../../@store/auth/AuthActions";
 
@@ -35,15 +36,6 @@ export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const _retrieveData = async (key) => {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        return value;
-      }
-    } catch (error) {}
-  };
-
   const handleLoginSubmit = () => {
     if (username === "" || password === "") {
       alert("Please Enter All Fields Correctly");
@@ -61,12 +53,13 @@ export default function LoginScreen({ navigation }) {
   };
 
   useEffect(() => {
-    const userId = _retrieveData("userId");
-    const access_token = _retrieveData("access_token");
-
-    if (userId && access_token) {
-      navigation.navigate("Navigation");
-    }
+    const checkUserAuthentication = async () => {
+      const userId = await StorageHelper.getItem("userId");
+      const access_token = await StorageHelper.getItem("access_token");
+      if (userId && access_token) {
+        navigation.navigate("Navigation");
+      }
+    };
   }, [navigation]);
 
   return (
