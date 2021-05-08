@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 import styled from "styled-components/native";
 
-import { Col, Text } from "../../@uiComponents";
+import { Col, MyText } from "../../@uiComponents";
 import StorageHelper from "../../@helpers/StorageHelper";
 import loginScreen from "../../assets/loginScreen.png";
 import { submitLogin } from "../../@store/auth/AuthActions";
@@ -65,7 +65,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <Col centerAll>
       <Image source={loginScreen} />
-      <Text
+      <MyText
         weight="700"
         color="#4E3883"
         lineHeight="22px"
@@ -74,8 +74,8 @@ export default function LoginScreen({ navigation }) {
         marg="0 0 10px 0"
       >
         Welcome
-      </Text>
-      <Text
+      </MyText>
+      <MyText
         weight="700"
         color="#4E3883"
         lineHeight="22px"
@@ -83,7 +83,7 @@ export default function LoginScreen({ navigation }) {
         size="18px"
       >
         Log In to continue
-      </Text>
+      </MyText>
       <MyInput
         placeholder="Email"
         marg="40px 0 20px 0"
@@ -99,7 +99,7 @@ export default function LoginScreen({ navigation }) {
         onSubmitEditing={handleLoginSubmit}
       />
       <MyButton onPress={handleLoginSubmit}>
-        <Text
+        <MyText
           weight="600"
           color="#4E3883"
           lineHeight="22px"
@@ -108,10 +108,10 @@ export default function LoginScreen({ navigation }) {
           color="#ffffff"
         >
           Login
-        </Text>
+        </MyText>
       </MyButton>
       <MyButton onPress={() => navigation.navigate("Register")}>
-        <Text
+        <MyText
           weight="600"
           color="#4E3883"
           lineHeight="22px"
@@ -120,7 +120,7 @@ export default function LoginScreen({ navigation }) {
           color="#ffffff"
         >
           Sign Up
-        </Text>
+        </MyText>
       </MyButton>
     </Col>
   );

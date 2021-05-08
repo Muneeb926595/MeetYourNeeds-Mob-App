@@ -68,7 +68,7 @@ export default function SignupScreen({ navigation }) {
   return (
     <Col centerAll>
       <Image source={loginScreen} />
-      <Text
+      <MyText
         weight="600"
         color="#4E3883"
         lineHeight="22px"
@@ -77,7 +77,7 @@ export default function SignupScreen({ navigation }) {
         marg="0 0 16px 0"
       >
         Create account
-      </Text>
+      </MyText>
       <MyInput
         placeholder="Email"
         marg="0 0 10px 0"
@@ -112,7 +112,7 @@ export default function SignupScreen({ navigation }) {
         onSubmitEditing={handleSignupSubmit}
       />
       <MyButton onPress={handleSignupSubmit}>
-        <Text
+        <MyText
           weight="600"
           color="#4E3883"
           lineHeight="22px"
@@ -121,10 +121,10 @@ export default function SignupScreen({ navigation }) {
           color="#ffffff"
         >
           Sign Up
-        </Text>
+        </MyText>
       </MyButton>
       <MyButton onPress={() => navigation.navigate("Login")}>
-        <Text
+        <MyText
           weight="600"
           color="#4E3883"
           lineHeight="22px"
@@ -133,7 +133,7 @@ export default function SignupScreen({ navigation }) {
           color="#ffffff"
         >
           Login
-        </Text>
+        </MyText>
       </MyButton>
     </Col>
   );

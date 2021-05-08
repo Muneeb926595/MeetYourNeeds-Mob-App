@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import CartScreen from "../CartScreen/CartScreen";
 import HomeScreen from "../HomeScreen/HomeScreen";
 import LogOutscreen from "../LogOutScreen/LogOutscreen";
+import AddNewProduct from "../../@components/AddNewProduct/AddNewProduct";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -31,7 +32,7 @@ export default function Navigation({ navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Home",
+      title: "",
       headerLeft: () => <></>,
     });
   }, [navigation]);
@@ -62,6 +63,16 @@ export default function Navigation({ navigation }) {
               )}
               <MaterialCommunityIcons name="cart" color={color} size={24} />
             </>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AddProduct"
+        component={AddNewProduct}
+        options={{
+          tabBarLabel: "Add Product",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="plus" color={color} size={24} />
           ),
         }}
       />

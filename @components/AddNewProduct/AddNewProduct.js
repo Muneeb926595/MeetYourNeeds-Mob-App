@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Image } from "react-native";
 import ImagePicker from "react-native-image-crop-picker";
 
-import { Clickable, Col, Row, Button } from "../../@uiComponents";
+import { Clickable, Col, Row, MyButton } from "../../@uiComponents";
 import addMediaIcon from "../../assets/addMediaIcon.svg";
 import StorageHelper from "../../@helpers/StorageHelper";
 import { addNewProduct } from "../../@store/product/ProductActions";
@@ -43,7 +43,7 @@ const AddNewProduct = () => {
   const [file, setFile] = useState(null);
   const [userId, setUserId] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("Face");
+  const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [isDisable, setIsDisable] = useState(true);
@@ -66,25 +66,25 @@ const AddNewProduct = () => {
   }, []);
 
   const handleImagePick = () => {
-    ImagePicker.openPicker({
-      width: 800,
-      height: 800,
-      cropping: true,
-    }).then(async (image) => {
-      let crop = await ImagePicker.openCropper({
-        path: image.path,
-        width: 800,
-        height: 800,
-        compressImageMaxWidth: 800,
-        compressImageMaxHeight: 800,
-      });
-      crop = { ...crop, uri: image.sourceURL, filename: image.filename };
-      setFile(crop);
-    });
+    // ImagePicker.openPicker({
+    //   width: 800,
+    //   height: 800,
+    //   cropping: true,
+    // }).then(async (image) => {
+    //   let crop = await ImagePicker.openCropper({
+    //     path: image.path,
+    //     width: 800,
+    //     height: 800,
+    //     compressImageMaxWidth: 800,
+    //     compressImageMaxHeight: 800,
+    //   });
+    //   crop = { ...crop, uri: image.sourceURL, filename: image.filename };
+    //   setFile(crop);
+    // });
   };
 
   return (
-    <Col noFlex bg="#ffffff" wid="360px">
+    <Col bg="#ffffff" wid="100%" pad="20px">
       <StyledInput
         ht="40px"
         placeholder="Name of product"
@@ -126,7 +126,7 @@ const AddNewProduct = () => {
         </Clickable>
       </Row>
       <ButtonContainer>
-        <Button
+        <MyButton
           disabled={isDisable}
           text="Add Post"
           bgColor="#007aff"

@@ -2,26 +2,20 @@ import React from "react";
 import { View, Image } from "react-native";
 import loading from "../../assets/loading.gif";
 
+import { Col } from "../../@uiComponents";
+
 function Loader() {
   return (
-    <View
-      style={{
-        display: "flex",
-        alignContent: "center",
-        justifyContent: "center",
-        width: 56,
-        height: 56,
-      }}
-    >
-      {/* <Image
+    <Col noFlex centerAll>
+      <Image
         source={loading}
         style={{
           alignSelf: "center",
-          width: 100,
-          height: 100,
+          width: 40,
+          height: 40,
         }}
-      /> */}
-    </View>
+      />
+    </Col>
   );
 }
 

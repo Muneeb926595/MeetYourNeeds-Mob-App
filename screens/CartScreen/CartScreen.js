@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 
 import CartCard from "../../@components/CartCard/CartCard";
-import { Button } from "../../@uiComponents";
+import { MyButton } from "../../@uiComponents";
 import { addOrder } from "../../@store/auth/AuthActions";
 import StorageHelper from "../../@helpers/StorageHelper";
 
@@ -42,7 +42,7 @@ const CartScreen = () => {
         keyboardShouldPersistTaps="handled"
       />
       <Checkout>
-        <Button
+        <MyButton
           text="Confirm Order"
           bgColor="#007aff"
           disabled={!(cartData.length > 0)}
