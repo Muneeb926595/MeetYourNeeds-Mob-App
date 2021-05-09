@@ -46,7 +46,7 @@ export const submitLogin = (user: User, navigation) => {
         }
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log(error);
         if (error?.response?.data) {
           alert(error.response.data);
         }
@@ -170,7 +170,7 @@ const getUserSuccess = (dispatch, data) => {
   });
 };
 
-export const addToCart = (productId) => {
+export const addToCart = (userId, productId) => {
   return (dispatch) => {
     dispatch({
       type: AuthActionTypes.ADD_TO_CART_START,
@@ -178,7 +178,7 @@ export const addToCart = (productId) => {
 
     const url = addToCartUrl();
     const request = {
-      userId: localStorage.getItem("userId"),
+      userId: userId,
       productId: productId,
     };
     axios
@@ -213,13 +213,14 @@ const addToCartSuccess = (dispatch, data) => {
   });
 };
 
-export const getCart = (productId) => {
+export const getCart = (userId) => {
   return (dispatch) => {
     dispatch({
       type: AuthActionTypes.GET_CART_START,
     });
 
-    const url = getCartUrl(localStorage.getItem("userId"));
+    const url = getCartUrl(userId);
+    console.log("sending request to", url);
     axios
       .get(url)
       .then((res) => {
@@ -251,13 +252,13 @@ const getCartSuccess = (dispatch, data) => {
     payload: data,
   });
 };
-export const removeFromCart = (productId) => {
+export const removeFromCart = (userId, productId) => {
   return (dispatch) => {
     dispatch({
       type: AuthActionTypes.REMOVE_FROM_CART_START,
     });
 
-    const url = removeFromCartUrl(localStorage.getItem("userId"), productId);
+    const url = removeFromCartUrl(userId, productId);
     axios
       .delete(url)
       .then((res) => {
@@ -290,7 +291,10 @@ const removeFromCartSuccess = (dispatch, data) => {
   });
 };
 
-export const addOrder = ({ products, paymentMethod }, setShowCheckoutModal) => {
+export const addOrder = (
+  { products, paymentMethod, userId },
+  setShowCheckoutModal
+) => {
   return (dispatch) => {
     dispatch({
       type: AuthActionTypes.ADD_ORDER_START,
@@ -299,7 +303,7 @@ export const addOrder = ({ products, paymentMethod }, setShowCheckoutModal) => {
     const url = addOrderUrl();
 
     const request = {
-      userId: localStorage.getItem("userId"),
+      userId: userId,
       products: products,
       paymentMethod: paymentMethod.creditCard
         ? "creditCard"

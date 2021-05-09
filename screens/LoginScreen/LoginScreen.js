@@ -2,22 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
-import { Col, Text } from "../../@uiComponents";
+import { Col, MyText } from "../../@uiComponents";
+import StorageHelper from "../../@helpers/StorageHelper";
 import loginScreen from "../../assets/loginScreen.png";
 import { submitLogin } from "../../@store/auth/AuthActions";
 
 const Image = styled.Image`
   width: 80%;
   height: 40%;
-  margin: 0 0 20px 0;
+  margin: 0 0 ${wp(5)}px 0;
 `;
 const MyInput = styled.TextInput`
   ${(props) => props.marg && `margin: ${props.marg}`};
   width: 80%;
-  height: 46px;
+  height: ${wp(12.5)}px;
   color: #4e3883;
-  padding: 10px;
+  padding: ${wp(2.5)}px;
   background-color: #ffffff;
 `;
 const MyButton = styled.TouchableOpacity`
@@ -26,23 +29,14 @@ const MyButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: #007aff;
-  margin-bottom: 10px;
-  padding: 10px 0px;
+  margin-bottom: ${wp(2.5)}px;
+  padding: ${wp(2.5)}px 0px;
 `;
 
 export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const _retrieveData = async (key) => {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        return value;
-      }
-    } catch (error) {}
-  };
 
   const handleLoginSubmit = () => {
     if (username === "" || password === "") {
@@ -61,36 +55,38 @@ export default function LoginScreen({ navigation }) {
   };
 
   useEffect(() => {
-    const userId = _retrieveData("userId");
-    const access_token = _retrieveData("access_token");
-
-    if (userId && access_token) {
-      navigation.navigate("Navigation");
-    }
+    const checkUserAuthentication = async () => {
+      const userId = await StorageHelper.getItem("userId");
+      const access_token = await StorageHelper.getItem("access_token");
+      if (userId && access_token) {
+        navigation.navigate("Navigation");
+      }
+    };
+    checkUserAuthentication();
   }, [navigation]);
 
   return (
     <Col centerAll>
       <Image source={loginScreen} />
-      <Text
+      <MyText
         weight="700"
         color="#4E3883"
-        lineHeight="22px"
+        lineHeight={`${wp(5.5)}px`}
         letterSpacing="0.27619px"
-        size="34px"
-        marg="0 0 10px 0"
+        size={`${RFValue(32)}px`}
+        marg={`0 0 ${wp(2)}px 0 `}
       >
         Welcome
-      </Text>
-      <Text
+      </MyText>
+      <MyText
         weight="700"
         color="#4E3883"
-        lineHeight="22px"
+        lineHeight={`${wp(5.5)}px`}
         letterSpacing="0.27619px"
-        size="18px"
+        size={`${RFValue(17)}px`}
       >
         Log In to continue
-      </Text>
+      </MyText>
       <MyInput
         placeholder="Email"
         marg="40px 0 20px 0"
@@ -106,28 +102,28 @@ export default function LoginScreen({ navigation }) {
         onSubmitEditing={handleLoginSubmit}
       />
       <MyButton onPress={handleLoginSubmit}>
-        <Text
+        <MyText
           weight="600"
           color="#4E3883"
-          lineHeight="22px"
+          lineHeight={`${wp(5.5)}px`}
           letterSpacing="0.27619px"
-          size="18px"
+          size={`${RFValue(17)}px`}
           color="#ffffff"
         >
           Login
-        </Text>
+        </MyText>
       </MyButton>
       <MyButton onPress={() => navigation.navigate("Register")}>
-        <Text
+        <MyText
           weight="600"
           color="#4E3883"
-          lineHeight="22px"
+          lineHeight={`${wp(5.5)}px`}
           letterSpacing="0.27619px"
-          size="18px"
+          size={`${RFValue(17)}px`}
           color="#ffffff"
         >
           Sign Up
-        </Text>
+        </MyText>
       </MyButton>
     </Col>
   );

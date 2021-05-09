@@ -9,9 +9,12 @@ const removeItem = async (key) => {
 
 const LogOutscreen = ({ navigation }) => {
   useEffect(() => {
-    removeItem("userId");
-    removeItem("access_token");
-    navigation.navigate("Login");
+    const logOutUser = async () => {
+      await removeItem("userId");
+      await removeItem("access_token");
+      navigation.navigate("Login");
+    };
+    logOutUser();
   }, [navigation]);
   return <></>;
 };

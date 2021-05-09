@@ -1,29 +1,32 @@
-import React, { useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
 import { Text } from "react-native";
+import { useSelector } from "react-redux";
 import styled from "styled-components/native";
+import React, { useLayoutEffect } from "react";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import CartScreen from "../CartScreen/CartScreen";
 import HomeScreen from "../HomeScreen/HomeScreen";
 import LogOutscreen from "../LogOutScreen/LogOutscreen";
+import AddNewProduct from "../../@components/AddNewProduct/AddNewProduct";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const CartCount = styled.View`
   position: absolute;
-  right: -4px;
-  top: -2px;
+  right: -${wp(1)}px;
+  top: -${wp(0.5)}px;
   background-color: #fd7e7e;
   border-radius: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 6px;
-  width: 14px;
-  height: 14px;
-  font-size: 9px;
+  padding: ${wp(1.5)}px;
+  width: ${wp(3.5)}px;
+  height: ${wp(3.5)}px;
+  font-size: ${RFValue(9)}px;
   color: #ffffff;
 `;
 export default function Navigation({ navigation }) {
@@ -31,7 +34,7 @@ export default function Navigation({ navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Home",
+      title: "",
       headerLeft: () => <></>,
     });
   }, [navigation]);
@@ -62,6 +65,16 @@ export default function Navigation({ navigation }) {
               )}
               <MaterialCommunityIcons name="cart" color={color} size={24} />
             </>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AddProduct"
+        component={AddNewProduct}
+        options={{
+          tabBarLabel: "Add Product",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="plus" color={color} size={24} />
           ),
         }}
       />

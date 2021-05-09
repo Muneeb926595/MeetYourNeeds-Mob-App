@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="Group_8052" data-name="Group 8052" transform="translate(-128 -149)">
+    <g id="Group_8044" data-name="Group 8044" transform="translate(125.539 146.577)">
+      <g id="Rectangle_2544" data-name="Rectangle 2544" transform="translate(2.461 2.423)" fill="none" stroke="#7a8fa6" stroke-width="1">
+        <rect width="30" height="30" rx="15" stroke="none"/>
+        <rect x="0.5" y="0.5" width="29" height="29" rx="14.5" fill="none"/>
+      </g>
+    </g>
+    <g id="add_photo_alternate-24px" transform="translate(133 154)">
+      <path id="Path_15309" data-name="Path 15309" d="M0,0H20V20H0Z" transform="translate(0 0)" fill="none"/>
+      <path id="Path_15310" data-name="Path 15310" d="M16.077,6.087V8.53s-1.626.008-1.635,0V6.087H11.991s.008-1.626,0-1.635h2.452V2h1.635V4.452h2.452V6.087ZM13.625,9.356V6.9H11.173V4.452H4.635A1.639,1.639,0,0,0,3,6.087v9.808a1.639,1.639,0,0,0,1.635,1.635h9.808a1.639,1.639,0,0,0,1.635-1.635V9.356ZM4.635,15.894l2.452-3.269,1.635,2.452,2.452-3.269,3.269,4.087Z" transform="translate(-0.317 -0.212)" fill="#7a8fa6"/>
+    </g>
+  </g>
+</svg>

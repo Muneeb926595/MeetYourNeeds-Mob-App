@@ -1,19 +1,22 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import { StorageHelper } from "../@helpers";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api/",
-  // baseURL: "https://meet-your-needs-api.herokuapp.com/api/",
+  // baseURL: "http://localhost:3000/api/",
+  baseURL: "https://meet-your-needs-api.herokuapp.com/api/",
 });
 const ResponseInterceptor = (response: AxiosResponse) => {
   return response;
 };
-const RequestInterceptor = (config: AxiosRequestConfig) => {
-  config.headers.Authorization =
-    "Bearer " + localStorage.getItem("access_token");
+const RequestInterceptor = async (config: AxiosRequestConfig) => {
+  const accessToken = await StorageHelper.getItem(
+    StorageHelper.StorageKeys.Access_Token
+  );
+  config.headers.Authorization = "Bearer " + accessToken;
   return config;
 };
 axiosInstance.interceptors.request.use(RequestInterceptor);
-axiosInstance.interceptors.response.use(ResponseInterceptor, (error) => {
+axiosInstance.interceptors.response.use(ResponseInterceptor, async (error) => {
   const expectedErrors =
     error.response &&
     error.response.status >= 400 &&
@@ -23,8 +26,8 @@ axiosInstance.interceptors.response.use(ResponseInterceptor, (error) => {
     return;
   } else {
     if (error.response.status === 401) {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("userId");
+      await StorageHelper.removeItem(StorageHelper.StorageKeys.Access_Token);
+      await StorageHelper.removeItem(StorageHelper.StorageKeys.USER_ID);
       window.location.href = "/login";
     }
     return Promise.reject(error);

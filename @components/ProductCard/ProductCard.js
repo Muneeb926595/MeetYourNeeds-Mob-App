@@ -1,10 +1,14 @@
+import { Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
+import { Col, Box, Clickable, MyText } from "../../@uiComponents";
 import cartIcon from "../../assets/cartIcon.png";
 import addedToCartIcon from "../../assets/addedToCartIcon.png";
-import { Clickable } from "../../@uiComponents";
+import { StorageHelper } from "../../@helpers";
+import ProductImage from "../../@components/ProductImage/ProductImage";
 import {
   addToCart,
   addToCartLocally,
@@ -12,73 +16,21 @@ import {
   removeFromCart,
 } from "../../@store/auth/AuthActions";
 
-const ProductCard = styled.View`
-  background-color: #ffffff;
-  box-shadow: 0px 0px 20px #dbdbdb;
-  height: 20pc;
-  margin: 20px;
-  margin-bottom: 6px;
-  border-radius: 6px;
-  padding: 16px;
-`;
-const ProductInfoContainer = styled.View`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-`;
-const AddToCart = styled.Image`
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  border-radius: 100%;
-  padding: 4px;
-  right: 10px;
-  top: 8px;
-`;
-const ProductCategory = styled.Text`
-  padding: 0px;
-  margin-bottom: 5px;
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: -0.256px;
-  line-height: 32px;
-`;
-const ProductName = styled.Text`
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1;
-  text-transform: capitalize;
-  letter-spacing: -0.9px;
-`;
-const ProductDescription = styled.Text`
-  margin-top: 8px;
-  color: rgba(0, 0, 0, 0.3);
-  font-weight: 400;
-  font-size: 18px;
-  letter-spacing: -0.256px;
-  line-height: 32px;
-`;
-const ProductPrice = styled.Text`
-  margin-top: 2px;
-  font-weight: 400;
-  font-size: 20px;
-  color: #000000;
-  letter-spacing: -0.256px;
-  line-height: 32px;
-`;
-const ProductImage = styled.Image`
-  border-radius: 16px;
-  width: 100%;
-  height: 10pc;
-  object-fit: cover;
-  margin-top: 10px;
-`;
-
 const ProductItem = ({ item }) => {
   const dispatch = useDispatch();
+  const [userId, setUserId] = useState("");
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState(false);
 
   const cartData = useSelector(({ MeedYourNeeds }) => MeedYourNeeds.auth.cart);
+
+  useEffect(() => {
+    const getUserId = async () => {
+      const localUserId = await StorageHelper.getItem("userId");
+      setUserId(localUserId);
+    };
+
+    getUserId();
+  }, [StorageHelper]);
 
   useEffect(() => {
     cartData.map((singleProduct) => {
@@ -90,12 +42,19 @@ const ProductItem = ({ item }) => {
 
   return (
     <>
-      <ProductCard>
-        <ProductInfoContainer>
+      <Box
+        bg="#ffffff"
+        hasShadow="0px 0px 20px #dbdbdb"
+        ht={`${wp(90)}px`}
+        marg={`${wp(5)}px ${wp(5)}px ${wp(1.5)}px ${wp(5)}px`}
+        hasRadius="6px"
+        pad={`${wp(4)}px`}
+      >
+        <Col>
           <Clickable
-            onClick={() => {
+            onPress={() => {
               if (!alreadyAddedToCart) {
-                dispatch(addToCart(item._id));
+                dispatch(addToCart(userId, item._id));
                 dispatch(
                   addToCartLocally(
                     item._id,
@@ -107,25 +66,73 @@ const ProductItem = ({ item }) => {
                   )
                 );
               } else {
-                dispatch(removeFromCart(item._id));
+                dispatch(removeFromCart(userId, item._id));
                 dispatch(removeFromCartLocally(item._id));
               }
               setAlreadyAddedToCart(!alreadyAddedToCart);
             }}
           >
-            <AddToCart
-              source={{ uri: alreadyAddedToCart ? addedToCartIcon : cartIcon }}
+            <Image
+              style={{
+                position: "absolute",
+                width: wp(6),
+                height: wp(6),
+                borderRadius: 100,
+                padding: wp(1),
+                right: wp(2.5),
+                top: wp(2),
+              }}
+              source={alreadyAddedToCart ? addedToCartIcon : cartIcon}
             />
           </Clickable>
-          <ProductCategory>{item.category}</ProductCategory>
-          <ProductName>{item.title}</ProductName>
-          <ProductDescription>{item.description}</ProductDescription>
-          <ProductPrice>Rs. {item.price}</ProductPrice>
-        </ProductInfoContainer>
-        <ProductImage
-          source={{ uri: "http://localhost:3000/api/" + item.image }}
-        />
-      </ProductCard>
+          <MyText
+            pad="0px"
+            marg={`0 0 ${wp(1)}px 0`}
+            size={`${RFValue(19)}px`}
+            weight="400"
+            spacing="-0.256px"
+          >
+            {item.category}
+          </MyText>
+          <MyText
+            textTransform="capitalize"
+            size={`${RFValue(15)}px`}
+            weight="700"
+            spacing="-0.9px"
+          >
+            {item.title}
+          </MyText>
+          <MyText
+            marg={`${wp(1)}px 0 0 0`}
+            color="rgba(0, 0, 0, 0.3)"
+            pad="0px"
+            size={`${RFValue(15)}px`}
+            weight="400"
+            spacing="-0.256px"
+          >
+            {item.description}
+          </MyText>
+          <MyText
+            marg={`${wp(1)}px 0 0 0`}
+            color="rgba(0, 0, 0, 0.3)"
+            size={`${RFValue(14)}px`}
+            weight="400"
+            spacing="-0.256px"
+          >
+            Call Me At : {item.phoneNo}
+          </MyText>
+          <MyText
+            marg={`${wp(1)}px 0 0 0`}
+            color="#000000"
+            size={`${RFValue(15)}px`}
+            weight="400"
+            spacing="-0.256px"
+          >
+            Rs. {item.price}
+          </MyText>
+        </Col>
+        <ProductImage imageUrl={item.image} />
+      </Box>
     </>
   );
 };

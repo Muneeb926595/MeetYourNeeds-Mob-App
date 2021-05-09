@@ -29,15 +29,15 @@ export const addNewProduct = (product: Product) => {
         if (data) {
           addNewProductuccess(dispatch, data);
         } else {
-          createPostFail(dispatch, "There was an error connection");
+          addNewProductFail(dispatch, "There was an error connection");
         }
       })
       .catch((error) => {
-        createPostFail(dispatch, "There was an error connection2");
+        addNewProductFail(dispatch, "There was an error connection2");
       });
   };
 };
-const createPostFail = (dispatch, errorMessage) => {
+const addNewProductFail = (dispatch, errorMessage) => {
   dispatch({
     type: ProductActionTypes.CREATE_PRODUCT_FAIL,
     payload: {
@@ -59,11 +59,13 @@ export const getProducts = () => {
       type: ProductActionTypes.GET_PRODUCTS_START,
     });
     const url = getProductsUrl();
+    console.log("geeting products from ", url);
     axios
       .get(url)
       .then((res) => {
         let { data } = res;
-        if (data) {
+        console.log("got this", data);
+        if (data.length) {
           getProductsSuccess(dispatch, data);
         } else {
           getProductsFail(dispatch, "There was an error connection");

@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Image } from "react-native";
-import loading from "../../assets/loading.gif";
+import imageLoader from "../../assets/imageLoader.gif";
 
 import { Col } from "../../@uiComponents";
 
-function Loader() {
+function ImageLoader() {
   return (
     <Col noFlex centerAll>
       <Image
-        source={loading}
+        source={imageLoader}
         style={{
           alignSelf: "center",
           width: 40,
@@ -19,4 +19,4 @@ function Loader() {
   );
 }
 
-export default Loader;
+export default ImageLoader;
