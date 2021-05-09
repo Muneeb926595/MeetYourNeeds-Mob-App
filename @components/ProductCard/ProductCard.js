@@ -51,40 +51,78 @@ const ProductItem = ({ item }) => {
         pad={`${wp(4)}px`}
       >
         <Col>
-          <TouchableNativeFeedback
-            onPress={() => {
-              if (!alreadyAddedToCart) {
-                dispatch(addToCart(userId, item._id));
-                dispatch(
-                  addToCartLocally(
-                    item._id,
-                    item.title,
-                    item.price,
-                    item.description,
-                    "http://localhost:3000/api/" + item.image,
-                    item.category
-                  )
-                );
-              } else {
-                dispatch(removeFromCart(userId, item._id));
-                dispatch(removeFromCartLocally(item._id));
-              }
-              setAlreadyAddedToCart(!alreadyAddedToCart);
-            }}
-          >
-            <Image
-              style={{
-                position: "absolute",
-                width: wp(6),
-                height: wp(6),
-                borderRadius: 100,
-                padding: wp(1),
-                right: wp(2.5),
-                top: wp(2),
+          {Platform.OS === "android" ? (
+            <TouchableNativeFeedback
+              onPress={() => {
+                if (!alreadyAddedToCart) {
+                  dispatch(addToCart(userId, item._id));
+                  dispatch(
+                    addToCartLocally(
+                      item._id,
+                      item.title,
+                      item.price,
+                      item.description,
+                      "http://localhost:3000/api/" + item.image,
+                      item.category
+                    )
+                  );
+                } else {
+                  dispatch(removeFromCart(userId, item._id));
+                  dispatch(removeFromCartLocally(item._id));
+                }
+                setAlreadyAddedToCart(!alreadyAddedToCart);
               }}
-              source={alreadyAddedToCart ? addedToCartIcon : cartIcon}
-            />
-          </TouchableNativeFeedback>
+            >
+              <Image
+                style={{
+                  position: "absolute",
+                  width: wp(6),
+                  height: wp(6),
+                  borderRadius: 100,
+                  padding: wp(1),
+                  right: wp(2.5),
+                  top: wp(2),
+                }}
+                source={alreadyAddedToCart ? addedToCartIcon : cartIcon}
+              />
+            </TouchableNativeFeedback>
+          ) : (
+            <Clickable
+              onClick={() => {
+                if (!alreadyAddedToCart) {
+                  dispatch(addToCart(userId, item._id));
+                  dispatch(
+                    addToCartLocally(
+                      item._id,
+                      item.title,
+                      item.price,
+                      item.description,
+                      "http://localhost:3000/api/" + item.image,
+                      item.category
+                    )
+                  );
+                } else {
+                  dispatch(removeFromCart(userId, item._id));
+                  dispatch(removeFromCartLocally(item._id));
+                }
+                setAlreadyAddedToCart(!alreadyAddedToCart);
+              }}
+            >
+              <Image
+                style={{
+                  position: "absolute",
+                  width: wp(6),
+                  height: wp(6),
+                  borderRadius: 100,
+                  padding: wp(1),
+                  right: wp(2.5),
+                  top: wp(2),
+                }}
+                source={alreadyAddedToCart ? addedToCartIcon : cartIcon}
+              />
+            </Clickable>
+          )}
+
           <MyText
             pad="0px"
             marg={`0 0 ${wp(1)}px 0`}
