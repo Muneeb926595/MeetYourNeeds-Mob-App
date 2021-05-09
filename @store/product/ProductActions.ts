@@ -7,8 +7,21 @@ import { ProductActionTypes } from "../redux/actionTypes";
 import { axiosInstance as axios } from "../../@api/axios";
 import { Product } from "../../@models/Product";
 
-export const addNewProduct = (product: Product) => {
+export const addNewProduct = (product: Product, navigation) => {
+  const categoryList = ["Face", "Lip", "Eye", "Skincare", "Other"];
   return (dispatch) => {
+    if (!categoryList.includes(product.category.toString())) {
+      return alert("Catergory Must Be: (Face,Lip,Eye,Skincare,Other)");
+    }
+
+    let isPriceNo = /^\d+$/.test(product.price.toString());
+    let isPhoneNoNo = /^\d+$/.test(product.phoneNo.toString());
+    if (!isPriceNo) {
+      return alert("Price Must Not Contains Alphabets");
+    }
+    if (!isPhoneNoNo) {
+      return alert("Phone No Is Invalid");
+    }
     dispatch({
       type: ProductActionTypes.CREATE_PRODUCT_START,
     });
@@ -27,7 +40,7 @@ export const addNewProduct = (product: Product) => {
       .then((res) => {
         let { data } = res;
         if (data) {
-          addNewProductuccess(dispatch, data);
+          addNewProductuccess(dispatch, data, navigation);
         } else {
           addNewProductFail(dispatch, "There was an error connection");
         }
@@ -45,11 +58,12 @@ const addNewProductFail = (dispatch, errorMessage) => {
     },
   });
 };
-const addNewProductuccess = (dispatch, data) => {
+const addNewProductuccess = (dispatch, data, navigation) => {
   dispatch({
     type: ProductActionTypes.CREATE_PRODUCT_SUCCESS,
     payload: data,
   });
+  navigation.navigate("Home");
   dispatch(getProducts());
 };
 
