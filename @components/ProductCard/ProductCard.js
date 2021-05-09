@@ -1,4 +1,4 @@
-import { Image } from "react-native";
+import { Image, TouchableNativeFeedback } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -51,7 +51,7 @@ const ProductItem = ({ item }) => {
         pad={`${wp(4)}px`}
       >
         <Col>
-          <Clickable
+          <TouchableNativeFeedback
             onPress={() => {
               if (!alreadyAddedToCart) {
                 dispatch(addToCart(userId, item._id));
@@ -84,7 +84,7 @@ const ProductItem = ({ item }) => {
               }}
               source={alreadyAddedToCart ? addedToCartIcon : cartIcon}
             />
-          </Clickable>
+          </TouchableNativeFeedback>
           <MyText
             pad="0px"
             marg={`0 0 ${wp(1)}px 0`}
