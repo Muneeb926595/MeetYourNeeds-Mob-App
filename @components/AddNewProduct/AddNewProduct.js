@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import ImagePicker from "react-native-image-crop-picker";
+import * as ImagePicker from "expo-image-picker";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Image, TouchableNativeFeedback } from "react-native";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
@@ -44,6 +44,19 @@ const AddNewProduct = ({ navigation }) => {
   const [isDisable, setIsDisable] = useState(true);
 
   useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
     if (description === "" || price === "" || !userId) {
       setIsDisable(true);
     } else {
@@ -60,22 +73,17 @@ const AddNewProduct = ({ navigation }) => {
     getUserId();
   }, []);
 
-  const handleImagePick = () => {
-    ImagePicker.openPicker({
-      width: 800,
-      height: 800,
-      cropping: true,
-    }).then(async (image) => {
-      let crop = await ImagePicker.openCropper({
-        path: image.path,
-        width: 800,
-        height: 800,
-        compressImageMaxWidth: 800,
-        compressImageMaxHeight: 800,
-      });
-      crop = { ...crop, uri: image.sourceURL, filename: image.filename };
-      setFile(crop);
+  const handleImagePick = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    if (!result.cancelled) {
+      setFile(result);
+    }
   };
 
   return (
@@ -120,7 +128,7 @@ const AddNewProduct = ({ navigation }) => {
         </MyText>
         {Platform.OS === "android" ? (
           <TouchableNativeFeedback
-            onClick={() => {
+            onPress={() => {
               handleImagePick();
             }}
           >
@@ -140,6 +148,12 @@ const AddNewProduct = ({ navigation }) => {
               style={{ width: wp(7.5), height: wp(7.5) }}
             />
           </Clickable>
+        )}
+        {file && (
+          <Image
+            source={{ uri: file.uri }}
+            style={{ width: wp(30), height: wp(24), borderRadius: 10 }}
+          />
         )}
       </Row>
       <ButtonContainer>
