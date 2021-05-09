@@ -6,18 +6,15 @@ import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import { Col, Box, Clickable, MyText } from "../../@uiComponents";
 import cartIcon from "../../assets/cartIcon.png";
-import productPlaceholder from "../../assets/productPlaceholder.jpg";
 import addedToCartIcon from "../../assets/addedToCartIcon.png";
-import { StorageHelper, imageExists } from "../../@helpers";
+import { StorageHelper } from "../../@helpers";
+import ProductImage from "../../@components/ProductImage/ProductImage";
 import {
   addToCart,
   addToCartLocally,
   removeFromCartLocally,
   removeFromCart,
 } from "../../@store/auth/AuthActions";
-
-const localBaseUrl = "http://localhost:3000/api/";
-const productionBaseUrl = "https://meet-your-needs-api.herokuapp.com/api/";
 
 const ProductItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -55,7 +52,7 @@ const ProductItem = ({ item }) => {
       >
         <Col>
           <Clickable
-            onClick={() => {
+            onPress={() => {
               if (!alreadyAddedToCart) {
                 dispatch(addToCart(userId, item._id));
                 dispatch(
@@ -134,27 +131,7 @@ const ProductItem = ({ item }) => {
             Rs. {item.price}
           </MyText>
         </Col>
-        {imageExists(productionBaseUrl + item.image) ? (
-          <Image
-            style={{
-              borderRadius: 16,
-              width: wp(84),
-              height: wp(50),
-              marginTop: wp(2.5),
-            }}
-            source={{ uri: productionBaseUrl + item.image }}
-          />
-        ) : (
-          <Image
-            style={{
-              borderRadius: 16,
-              width: wp(84),
-              height: wp(50),
-              marginTop: wp(2.5),
-            }}
-            source={productPlaceholder}
-          />
-        )}
+        <ProductImage imageUrl={item.image} />
       </Box>
     </>
   );

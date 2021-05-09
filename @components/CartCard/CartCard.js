@@ -40,7 +40,6 @@ const ProductImage = styled.Image`
   height: 100%;
   border-radius: 6px;
   box-shadow: 0px 0px 8px #dbdbdb;
-  object-fit: cover;
 `;
 const ProductName = styled.Text`
   margin: 0;
@@ -94,7 +93,7 @@ const ProductItem = ({ item }) => {
       </ProductInfo>
       <RemoveProduct>
         <Clickable onClick={handleRemoveProduct}>
-          <DeleteIcon source={{ uri: deleteIcon }} />
+          <DeleteIcon source={deleteIcon} />
         </Clickable>
       </RemoveProduct>
     </ProductRowContainer>

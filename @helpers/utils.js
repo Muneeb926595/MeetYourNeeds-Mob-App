@@ -1,12 +1,17 @@
 export const imageExists = (image_url) => {
+  const isImageLoading = "loading";
   fetch(image_url, { method: "HEAD" })
     .then((res) => {
-      console.log(res);
       if (res.ok) {
+        isImageLoading = "not loading";
         return true;
       } else {
-        return false;
+        isImageLoading = "not loading";
       }
     })
-    .catch((err) => console.log("Error:", err));
+    .catch((err) => {
+      console.log("Error:", err);
+      isImageLoading = "not loading";
+    });
+  return isImageLoading;
 };
