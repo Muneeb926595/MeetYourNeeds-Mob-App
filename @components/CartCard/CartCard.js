@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import {
   removeFromCart,
@@ -15,9 +17,9 @@ const ProductRowContainer = styled.View`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  padding: 0px 12px;
+  padding: 0px ${wp(3)}px;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: ${wp(4)}px;
 `;
 const ProductInfo = styled.View`
   display: flex;
@@ -25,9 +27,9 @@ const ProductInfo = styled.View`
   align-items: center;
 `;
 const ProductImageContainer = styled.View`
-  width: 50px;
-  height: 50px;
-  margin-right: 8px;
+  width: ${wp(11.5)}px;
+  height: ${wp(11.5)}px;
+  margin-right: ${wp(2)}px;
 `;
 const ProductDetails = styled.View`
   display: flex;
@@ -44,21 +46,21 @@ const ProductName = styled.Text`
   margin: 0;
   text-transform: capitalize;
   font-weight: 500;
-  font-size: 18px;
+  font-size: ${RFValue(17)}px;
 `;
 const ProductPrice = styled.Text`
   margin: 0;
   font-weight: 300;
-  font-size: 16px;
+  font-size: ${RFValue(17)}px;
 `;
 const RemoveProduct = styled.View`
-  padding: 8px 10px;
+  padding: ${wp(2)}px ${wp(2.5)}px;
   border-radius: 6px;
   border: 1px solid red;
 `;
 const DeleteIcon = styled.Image`
-  width: 24px;
-  height: 24px;
+  width: ${wp(6)}px;
+  height: ${wp(6)}px;
 `;
 
 const ProductItem = ({ item }) => {

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import { Col, MyText } from "../../@uiComponents";
 import StorageHelper from "../../@helpers/StorageHelper";
@@ -11,14 +13,14 @@ import { submitLogin } from "../../@store/auth/AuthActions";
 const Image = styled.Image`
   width: 80%;
   height: 40%;
-  margin: 0 0 20px 0;
+  margin: 0 0 ${wp(5)}px 0;
 `;
 const MyInput = styled.TextInput`
   ${(props) => props.marg && `margin: ${props.marg}`};
   width: 80%;
-  height: 46px;
+  height: ${wp(12.5)}px;
   color: #4e3883;
-  padding: 10px;
+  padding: ${wp(2.5)}px;
   background-color: #ffffff;
 `;
 const MyButton = styled.TouchableOpacity`
@@ -27,8 +29,8 @@ const MyButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: #007aff;
-  margin-bottom: 10px;
-  padding: 10px 0px;
+  margin-bottom: ${wp(2.5)}px;
+  padding: ${wp(2.5)}px 0px;
 `;
 
 export default function LoginScreen({ navigation }) {
@@ -60,6 +62,7 @@ export default function LoginScreen({ navigation }) {
         navigation.navigate("Navigation");
       }
     };
+    checkUserAuthentication();
   }, [navigation]);
 
   return (
@@ -68,19 +71,19 @@ export default function LoginScreen({ navigation }) {
       <MyText
         weight="700"
         color="#4E3883"
-        lineHeight="22px"
+        lineHeight={`${wp(5.5)}px`}
         letterSpacing="0.27619px"
-        size="34px"
-        marg="0 0 10px 0"
+        size={`${RFValue(32)}px`}
+        marg={`0 0 ${wp(2)}px 0 `}
       >
         Welcome
       </MyText>
       <MyText
         weight="700"
         color="#4E3883"
-        lineHeight="22px"
+        lineHeight={`${wp(5.5)}px`}
         letterSpacing="0.27619px"
-        size="18px"
+        size={`${RFValue(17)}px`}
       >
         Log In to continue
       </MyText>
@@ -102,9 +105,9 @@ export default function LoginScreen({ navigation }) {
         <MyText
           weight="600"
           color="#4E3883"
-          lineHeight="22px"
+          lineHeight={`${wp(5.5)}px`}
           letterSpacing="0.27619px"
-          size="18px"
+          size={`${RFValue(17)}px`}
           color="#ffffff"
         >
           Login
@@ -114,9 +117,9 @@ export default function LoginScreen({ navigation }) {
         <MyText
           weight="600"
           color="#4E3883"
-          lineHeight="22px"
+          lineHeight={`${wp(5.5)}px`}
           letterSpacing="0.27619px"
-          size="18px"
+          size={`${RFValue(17)}px`}
           color="#ffffff"
         >
           Sign Up

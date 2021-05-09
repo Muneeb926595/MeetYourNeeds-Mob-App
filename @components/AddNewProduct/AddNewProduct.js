@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch } from "react-redux";
 import { Image } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import ImagePicker from "react-native-image-crop-picker";
 
 import { Clickable, Col, Row, MyButton } from "../../@uiComponents";
@@ -12,15 +14,15 @@ import { addNewProduct } from "../../@store/product/ProductActions";
 const StyledInput = styled.TextInput`
   width: 100%;
   height: ${(props) => props.ht};
-  padding: 0 8px;
+  padding: 0 ${wp(2)}px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: ${wp(5)}px;
   border: 1px solid #dbdbdb;
 `;
 
 const ImageTitle = styled.Text`
   font-weight: 700;
-  font-size: 12px;
+  font-size: ${RFValue(11.4)}px;
   line-height: 1;
   text-transform: capitalize;
 `;
@@ -29,11 +31,11 @@ const ButtonContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 20px;
+  padding: ${wp(2.5)}px ${wp(5)}px;
   width: 100%;
   justify-content: center;
   border-top-width: 1px;
-  margin-top: 10px;
+  margin-top: ${wp(2.5)}px;
   border-color: #dbdbdb;
 `;
 
@@ -84,33 +86,33 @@ const AddNewProduct = () => {
   };
 
   return (
-    <Col bg="#ffffff" wid="100%" pad="20px">
+    <Col bg="#ffffff" wid="100%" pad={`${wp(5)}px`}>
       <StyledInput
-        ht="40px"
+        ht={`${wp(10)}px`}
         placeholder="Name of product"
         value={title}
         onChangeText={(text) => setTitle(text)}
       />
       <StyledInput
-        ht="40px"
+        ht={`${wp(10)}px`}
         placeholder="Price ???"
         value={price}
         onChangeText={(text) => setPrice(text)}
       />
       <StyledInput
-        ht="40px"
+        ht={`${wp(10)}px`}
         placeholder="Cell phone no"
         value={phoneNo}
         onChangeText={(text) => setPhoneNo(text)}
       />
       <StyledInput
-        ht="70px"
+        ht={`${wp(17.5)}px`}
         placeholder="Write description here"
         value={description}
         onChangeText={(text) => setDescription(text)}
       />
       <StyledInput
-        ht="40px"
+        ht={`${wp(10)}px`}
         placeholder="Category (Face,Lip,Eye,Skincare,Other)"
         value={category}
         onChangeText={(text) => setCategory(text)}
@@ -122,7 +124,10 @@ const AddNewProduct = () => {
             handleImagePick();
           }}
         >
-          <Image source={addMediaIcon} style={{ width: 30, height: 30 }} />
+          <Image
+            source={addMediaIcon}
+            style={{ width: wp(7.5), height: wp(7.5) }}
+          />
         </Clickable>
       </Row>
       <ButtonContainer>

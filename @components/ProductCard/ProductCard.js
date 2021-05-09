@@ -1,18 +1,23 @@
 import { Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import { Col, Box, Clickable, MyText } from "../../@uiComponents";
-
 import cartIcon from "../../assets/cartIcon.png";
+import productPlaceholder from "../../assets/productPlaceholder.jpg";
 import addedToCartIcon from "../../assets/addedToCartIcon.png";
-import StorageHelper from "../../@helpers/StorageHelper";
+import { StorageHelper, imageExists } from "../../@helpers";
 import {
   addToCart,
   addToCartLocally,
   removeFromCartLocally,
   removeFromCart,
 } from "../../@store/auth/AuthActions";
+
+const localBaseUrl = "http://localhost:3000/api/";
+const productionBaseUrl = "https://meet-your-needs-api.herokuapp.com/api/";
 
 const ProductItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -43,10 +48,10 @@ const ProductItem = ({ item }) => {
       <Box
         bg="#ffffff"
         hasShadow="0px 0px 20px #dbdbdb"
-        ht="40%"
-        marg="20px 20px 6px 20px"
+        ht={`${wp(90)}px`}
+        marg={`${wp(5)}px ${wp(5)}px ${wp(1.5)}px ${wp(5)}px`}
         hasRadius="6px"
-        pad="16px"
+        pad={`${wp(4)}px`}
       >
         <Col>
           <Clickable
@@ -73,20 +78,20 @@ const ProductItem = ({ item }) => {
             <Image
               style={{
                 position: "absolute",
-                width: 24,
-                height: 24,
+                width: wp(6),
+                height: wp(6),
                 borderRadius: 100,
-                padding: 4,
-                right: 10,
-                top: 8,
+                padding: wp(1),
+                right: wp(2.5),
+                top: wp(2),
               }}
               source={alreadyAddedToCart ? addedToCartIcon : cartIcon}
             />
           </Clickable>
           <MyText
             pad="0px"
-            mar="0 0 5px 0"
-            size="20px"
+            marg={`0 0 ${wp(1)}px 0`}
+            size={`${RFValue(19)}px`}
             weight="400"
             spacing="-0.256px"
           >
@@ -94,45 +99,62 @@ const ProductItem = ({ item }) => {
           </MyText>
           <MyText
             textTransform="capitalize"
-            size="16px"
+            size={`${RFValue(15)}px`}
             weight="700"
             spacing="-0.9px"
           >
             {item.title}
           </MyText>
           <MyText
-            mar="12px 0 0 0"
+            marg={`${wp(1)}px 0 0 0`}
             color="rgba(0, 0, 0, 0.3)"
             pad="0px"
-            size="16px"
+            size={`${RFValue(15)}px`}
             weight="400"
             spacing="-0.256px"
           >
             {item.description}
           </MyText>
           <MyText
-            mar="8px 0 0 0"
+            marg={`${wp(1)}px 0 0 0`}
             color="rgba(0, 0, 0, 0.3)"
-            size="14px"
+            size={`${RFValue(14)}px`}
             weight="400"
             spacing="-0.256px"
           >
             Call Me At : {item.phoneNo}
           </MyText>
           <MyText
-            mar="2px 0 0 0"
+            marg={`${wp(1)}px 0 0 0`}
             color="#000000"
-            size="16px"
+            size={`${RFValue(15)}px`}
             weight="400"
             spacing="-0.256px"
           >
             Rs. {item.price}
           </MyText>
         </Col>
-        <Image
-          style={{ borderRadius: 16, width: 100, height: 20, marginTop: 10 }}
-          source={{ uri: "http://localhost:3000/api/" + item.image }}
-        />
+        {imageExists(productionBaseUrl + item.image) ? (
+          <Image
+            style={{
+              borderRadius: 16,
+              width: wp(84),
+              height: wp(50),
+              marginTop: wp(2.5),
+            }}
+            source={{ uri: productionBaseUrl + item.image }}
+          />
+        ) : (
+          <Image
+            style={{
+              borderRadius: 16,
+              width: wp(84),
+              height: wp(50),
+              marginTop: wp(2.5),
+            }}
+            source={productPlaceholder}
+          />
+        )}
       </Box>
     </>
   );

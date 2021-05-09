@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FlatList, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import CartCard from "../../@components/CartCard/CartCard";
 import { MyButton } from "../../@uiComponents";
@@ -12,11 +14,11 @@ const Checkout = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 20px;
+  padding: ${wp(2.5)}px ${wp(5)}px;
   width: 100%;
   justify-content: center;
   border-top-width: 1px;
-  margin-top: 10px;
+  margin-top: ${wp(2.5)}px;
   border-color: #dbdbdb;
 `;
 
@@ -34,7 +36,7 @@ const CartScreen = () => {
     getUserId();
   }, []);
   return (
-    <View style={{ marginTop: 20 }}>
+    <View style={{ marginTop: wp(5) }}>
       <FlatList
         data={cartData}
         renderItem={({ item }) => <CartCard item={item} />}

@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import loginScreen from "../../assets/loginScreen.png";
 import { submitRegister } from "../../@store/auth/AuthActions";
-import { Col, Text } from "../../@uiComponents";
+import { Col, MyText } from "../../@uiComponents";
 
 const Image = styled.Image`
   width: 80%;
   height: 40%;
-  margin: 0 0 20px 0;
+  margin: 0 0 ${wp(5)}px 0;
 `;
 const MyInput = styled.TextInput`
   ${(props) => props.marg && `margin: ${props.marg}`};
   width: 80%;
-  height: 46px;
+  height: ${wp(10.5)}px;
   color: #4e3883;
-  padding: 10px;
+  padding: ${wp(2.5)}px;
   background-color: #ffffff;
 `;
 const MyButton = styled.TouchableOpacity`
@@ -25,8 +27,8 @@ const MyButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: #007aff;
-  margin-bottom: 10px;
-  padding: 10px 0px;
+  margin-bottom: ${wp(2.5)}px;
+  padding: ${wp(2.5)}px 0px;
 `;
 
 export default function SignupScreen({ navigation }) {
@@ -71,42 +73,42 @@ export default function SignupScreen({ navigation }) {
       <MyText
         weight="600"
         color="#4E3883"
-        lineHeight="22px"
+        lineHeight={`${wp(5.5)}px`}
         letterSpacing="0.27619px"
-        size="30px"
-        marg="0 0 16px 0"
+        size={`${RFValue(28)}px`}
+        marg={`0 0 ${wp(4)}px 0 `}
       >
         Create account
       </MyText>
       <MyInput
         placeholder="Email"
-        marg="0 0 10px 0"
+        marg={`0 0 ${wp(2.5)}px 0 `}
         value={email}
         onChangeText={(text) => setEmail(text)}
       />
       <MyInput
         placeholder="Full Name"
         value={fullname}
-        marg="0 0 10px 0"
+        marg={`0 0 ${wp(2.5)}px 0 `}
         onChangeText={(text) => setFullName(text)}
       />
       <MyInput
         placeholder="User Name"
         value={username}
-        marg="0 0 10px 0"
+        marg={`0 0 ${wp(2.5)}px 0 `}
         onChangeText={(text) => setUserName(text)}
       />
       <MyInput
         placeholder="Password"
         secureTextEntry
-        marg="0 0 10px 0"
+        marg={`0 0 ${wp(2.5)}px 0 `}
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
       <MyInput
         placeholder="Confirm Password"
         secureTextEntry
-        marg="0 0 10px 0"
+        marg={`0 0 ${wp(2.5)}px 0 `}
         value={confirmPassword}
         onChangeText={(text) => setConfirmPassword(text)}
         onSubmitEditing={handleSignupSubmit}
@@ -115,9 +117,9 @@ export default function SignupScreen({ navigation }) {
         <MyText
           weight="600"
           color="#4E3883"
-          lineHeight="22px"
+          lineHeight={`${wp(5.5)}px`}
           letterSpacing="0.27619px"
-          size="18px"
+          size={`${RFValue(17)}px`}
           color="#ffffff"
         >
           Sign Up
@@ -127,9 +129,9 @@ export default function SignupScreen({ navigation }) {
         <MyText
           weight="600"
           color="#4E3883"
-          lineHeight="22px"
+          lineHeight={`${wp(5.5)}px`}
           letterSpacing="0.27619px"
-          size="18px"
+          size={`${RFValue(17)}px`}
           color="#ffffff"
         >
           Login
