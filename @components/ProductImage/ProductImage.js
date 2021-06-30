@@ -15,7 +15,7 @@ const ProductImage = (imageUrl) => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(productionBaseUrl + imageUrl, { method: "HEAD" })
+    fetch(localBaseUrl + imageUrl, { method: "HEAD" })
       .then((res) => {
         if (res.ok) {
           setIsLoading(false);
@@ -47,7 +47,7 @@ const ProductImage = (imageUrl) => {
               height: wp(50),
               marginTop: wp(2.5),
             }}
-            source={{ uri: productionBaseUrl + imageUrl }}
+            source={{ uri: localBaseUrl + imageUrl }}
           />
         ) : (
           <Image

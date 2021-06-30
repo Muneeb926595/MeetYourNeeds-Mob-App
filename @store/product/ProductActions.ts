@@ -25,12 +25,20 @@ export const addNewProduct = (product: Product, navigation) => {
     dispatch({
       type: ProductActionTypes.CREATE_PRODUCT_START,
     });
-
     const url = getAddProductUrl();
     let formData = new FormData();
     for (let key in product) {
       if (key === "imageFile" && product[key] != null) {
-        formData.append(key, product[key], product[key].name);
+        const fileName = product["imageFile"].uri.split("/");
+        formData.append(
+          key,
+          {
+            uri: product[key].uri,
+            type: product[key].type,
+            name: fileName[fileName.length - 1],
+          },
+          fileName[fileName.length - 1]
+        );
       } else {
         formData.append(key, product[key]);
       }

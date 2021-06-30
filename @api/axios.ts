@@ -2,8 +2,8 @@ import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import { StorageHelper } from "../@helpers";
 
 export const axiosInstance = axios.create({
-  // baseURL: "http://localhost:3000/api/",
-  baseURL: "https://meet-your-needs-api.herokuapp.com/api/",
+  baseURL: "http://localhost:3000/api/",
+  // baseURL: "https://meet-your-needs-api.herokuapp.com/api/",
 });
 const ResponseInterceptor = (response: AxiosResponse) => {
   return response;
